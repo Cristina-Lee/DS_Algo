@@ -9,7 +9,7 @@
 	TElemType Nil=0;//整型以0为空
 #endif
 
-#include "tree_binarylinkedlist.h"
+#include "tree_trifurcatelinkedlist.h"
 void visit(TElemType e)
 {
 	cout<<e<<" ";
@@ -18,7 +18,7 @@ void visit(TElemType e)
 int main()
 {
 	int i;
-	BiTree T, p, c;
+	BiPTree T, p, c;
 	TElemType e1, e2;
 
 	InitBiTree(T);
@@ -49,6 +49,10 @@ int main()
 	cout<<"后序递归遍历二叉树："<<endl;
 	PostOrderTraverse(T, visit);
 	cout<<endl;
+	cout<<"层序遍历二叉树："<<endl;
+	LevelOrderTraverse(T, visit);
+	cout<<endl;
+
 	cout<<"请输入一个结点的值: ";
 	cin>>e1;
 	p=Point(T, e1);
@@ -56,7 +60,7 @@ int main()
 	cout<<"欲改变此结点的值，请输入新值：";
 	cin>>e2;
 	Assign(p, e2);
-	cout<<"层序遍历二叉树："<<endl;
+	cout<<"层序递归遍历二叉树："<<endl;
 	LevelOrderTraverse(T, visit);
 	cout<<endl;
 	e1=Parent(T, e2);
@@ -100,9 +104,6 @@ int main()
 	cout<<"先序递归遍历二叉树c："<<endl;
 	PreOrderTraverse(c,visit);
 	cout<<endl;
-	cout<<"层序递归遍历二叉树c："<<endl;
-	LevelOrderTraverse(c, visit);
-	cout<<endl;
 
 	cout<<"树c插入到树T中，请输入树T中树c的双亲结点 c为左(0)或右(1)子树：";
 	cin>>e1>>i;
@@ -110,9 +111,6 @@ int main()
 	InsertChild(p, i, c);
 	cout<<"先序递归遍历二叉树："<<endl;
 	PreOrderTraverse(T,visit);
-	cout<<endl;
-	cout<<"中序非递归遍历二叉树："<<endl;
-	InOrderTraverse_1(T, visit);
 	cout<<endl;
 
 	cout<<"删除子树，请输入待删除子树的双亲结点 左(0)或右(1)子树：";
@@ -122,9 +120,7 @@ int main()
 	cout<<"先序递归遍历二叉树："<<endl;
 	PreOrderTraverse(T,visit);
 	cout<<endl;
-	cout<<"中序非递归遍历二叉树："<<endl;
-	InOrderTraverse_2(T, visit);
-	cout<<endl;
+	
 	DestroyBiTree(T);
 
 	return 0;
