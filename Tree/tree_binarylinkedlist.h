@@ -1,7 +1,9 @@
 #ifndef TREE_BINARY_LinkedList_H
 #define TREE_BINARY_LinkedList_H
+
 #include<iostream>
 #include<queue>
+#include<stack>
 using namespace std;
 
 #define ClearBiTree DestroyBiTree
@@ -232,12 +234,56 @@ bool DeleteChild(BiTree p, int LR)
 	return false;
 }
 //顺序栈
+void InOrderTraverse_1(BiTree T, void(*Visit)(TElemType))
+{
+	stack<BiTree> s;
+	while(1)
+	{
+		if(T)
+		{
+			s.push(T);
+			T=T->lchild;
+		}
+		else
+		{
+			if(!s.empty())
+			{
+				T=s.top();
+				s.pop();
+				Visit(T->data);
+				T=T->rchild;
+			}
+			else
+				break;
 
+		}
+	}
 
+}
 
-
-
-
+void InOrderTraverse_2(BiTree T, void(*Visit)(TElemType))
+{
+	stack<BiTree> s;
+	s.push(T);//根指针进栈
+	BiTree p;
+	while(!s.empty())
+	{
+		p=s.top();//访问栈顶元素
+		while(p)
+		{
+			s.push(p->lchild);//向左走到尽头
+			p=p->lchild;//
+		}
+		s.pop();//空指针出栈
+		if(!s.empty())
+		{
+			p=s.top();
+			s.pop();
+			Visit(p->data);
+			s.push(p->rchild);
+		}
+	}
+}
 
 
 void PreOrderTraverse(BiTree T, void(*Visit)(TElemType))
@@ -259,6 +305,36 @@ void InOrderTraverse(BiTree T, void(*Visit)(TElemType))
 		InOrderTraverse(T->rchild, Visit);
 	}
 }
+
+void PostOrderTraverse(BiTree T, void(*Visit)(TElemType))
+{
+	if(T)
+	{
+		PostOrderTraverse(T->lchild, Visit);
+		PostOrderTraverse(T->rchild, Visit);
+		Visit(T->data);
+	}
+}
+void LevelOrderTraverse(BiTree T, void(*Visit)(TElemType))
+{
+	queue<BiTree> q;
+	BiTree a;
+	if(T)
+	{
+		q.push(T);
+		while(!q.empty())
+		{
+			a=q.front();
+			q.pop();
+			Visit(a->data);
+			if(a->lchild != NULL)
+				q.push(a->lchild);
+			if(a->rchild != NULL)
+				q.push(a->rchild);
+		}
+	}
+}
+
 
 
 #endif
